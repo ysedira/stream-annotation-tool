@@ -1,0 +1,9 @@
+<div *ngIf="resources$ | async as resources">
+  <ul class="nav">
+    <li *ngFor="let resource of resources" class="nav-item">
+      <a [routerLink]="['/resources', resource.type]" class="nav-link">{{resource.label? resource.label :
+        resource.type}}</a>
+    </li>
+  </ul>
+</div>
+

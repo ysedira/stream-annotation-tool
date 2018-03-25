@@ -1,0 +1,43 @@
+<div *ngIf="resource">
+  <h2>{{resource.type}}</h2>
+
+
+  <div class="form-group">
+    <label>Resource URI:</label>
+    <input class="form-control" type="text" [(ngModel)]="resource.subject" #resource_uri/>
+  </div>
+
+  <div *ngFor="let pred of resource.requiredPredicates" class="form-group">
+    <label>{{pred.predicate}}</label>
+    <input class="form-control" [(ngModel)]="pred.object" type="text" name="stream"/>
+  </div>
+
+  <!--Optional Predicate-->
+  <hr/>
+  <!--<mat-form-field>-->
+  <!--<input type="text" matInput [formControl]="opController" [matAutocomplete]="opValue">-->
+  <!--<mat-autocomplete #opValue="matAutocomplete" [displayWith]="opDisplay">-->
+  <!--<mat-option *ngFor="let option of opOptions | async" [value]="option">-->
+  <!--{{ option.predicate }}-->
+  <!--</mat-option>-->
+  <!--</mat-autocomplete>-->
+  <!--</mat-form-field>-->
+  <!--<button (click)="opAddTriple($event)">Add</button>-->
+
+  <div *ngFor="let pred of resource.optionalPredicates" class="form-group">
+    <label>{{pred.predicate}}</label>
+    <input class="form-control" [(ngModel)]="pred.object" type="text" name="stream"/>
+  </div>
+
+
+  <hr/>
+  <button (click)="generate($event)">
+    Generate
+  </button>
+  <div class="form-group">
+  <textarea class="form-control disabled">
+    {{ generatedRDF}}
+  </textarea>
+
+  </div>
+</div>
