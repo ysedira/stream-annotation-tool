@@ -1,0 +1,35 @@
+FROM ubuntu:17.10
+
+# -- Install Pipenv:
+RUN apt-get update \
+  && apt-get install software-properties-common python-software-properties -y \
+  && add-apt-repository ppa:pypa/ppa -y \
+  && apt-get update \
+  && apt-get install git pipenv nodejs npm -y
+RUN node --version
+RUN npm --version
+RUN npm install -g @angular/cli
+
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
+
+# -- Install Application into container:
+RUN set -ex && mkdir /app
+
+WORKDIR /app
+
+# -- Adding Pipfiles
+ONBUILD COPY Pipfile Pipfile
+ONBUILD COPY Pipfile.lock Pipfile.lock
+
+# -- Install dependencies:
+ONBUILD RUN set -ex && pipenv install --deploy --system
+
+COPY ./server /app/server
+
+COPY ./client /app/client
+
+RUN nohup python3 /app/server/sat/app/py &
+RUN cd /app/client && nohup ng serve &
+
+

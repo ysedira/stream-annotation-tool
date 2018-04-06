@@ -8,7 +8,7 @@
   </div>
 
   <div *ngFor="let pred of resource.requiredPredicates" class="form-group">
-    <label>{{pred.predicate}}</label>
+    <label>*{{pred.predicate}}</label>
     <input class="form-control" [(ngModel)]="pred.object" type="text" name="stream"/>
   </div>
 

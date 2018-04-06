@@ -6,7 +6,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "../stream-annotation-tool/api/static",
+      "outDir": "../server/sat/static",
       "assets": [
         "assets",
         "favicon.ico"
