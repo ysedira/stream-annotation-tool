@@ -11,7 +11,11 @@ using [VoCaLS](http://w3id.org/rsp/vocals/) ontology.
 
 # How to run it:
 
+```bash
+
 pipenv install
 pipenv shell
 cd server
 python sat/app.py
+
+```
