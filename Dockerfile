@@ -18,21 +18,20 @@ RUN set -ex && mkdir /app
 
 WORKDIR /app
 
-# -- Adding Pipfiles
-ONBUILD COPY Pipfile Pipfile
-ONBUILD COPY Pipfile.lock Pipfile.lock
 
-# -- Install dependencies:
-ONBUILD RUN set -ex && pipenv install --deploy --system
+RUN git clone https://github.com/ysedira/stream-annotation-tool.git /app 
 
-COPY ./server /app/server
-
-COPY ./client /app/client
 
 RUN cd /app/client \
+    && npm install \
     && ng build --prod --env=prod -bh /static --deploy-url /static
 
-CMD pipenv shell \
-    && python /app/server/sat/app/py
+ENV FLASK_ENV="docker"
+EXPOSE 5000
+# -- Install dependencies:
+RUN cd /app
+RUN pipenv install --deploy --system
+RUN source `pipenv --venv`/bin/activate
+CMD python /app/server/sat/app.py
 
 
