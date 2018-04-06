@@ -35,6 +35,7 @@ def resource_details(resource_type):
 
 @app.route("/api/resources", methods=["POST"])
 def _resource():
+    _schema = get_schema()
     out_format = request.args.get("format")
     if not out_format:
         out_format = "JSON_LD"
@@ -47,7 +48,7 @@ def _resource():
         "type": request_resource["type"],
         "predicates": predicates
     }
-    response = {"content": get_ontology(resource, frmt=out_format)}
+    response = {"content": get_ontology(_schema, resource, frmt=out_format)}
 
     return jsonify(response)
 

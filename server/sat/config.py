@@ -1,4 +1,54 @@
 SCHEMA = {
+    "prefixes": [
+        {
+            "prefix": "owl",
+            "uri": "http://www.w3.org/2002/07/owl#"
+        },
+        {
+            "prefix": "rdf",
+            "uri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        },
+        {
+            "prefix": "xml",
+            "uri": "http://www.w3.org/XML/1998/namespace"
+        },
+        {
+            "prefix": "xsd",
+            "uri": "http://www.w3.org/2001/XMLSchema#"
+        },
+        {
+            "prefix": "rdfs",
+            "uri": "http://www.w3.org/2000/01/rdf-schema#"
+        },
+        {
+            "prefix": "dcat",
+            "uri": "http://www.w3.org/ns/dcat"
+        },
+        {
+            "prefix": "time",
+            "uri": "http://www.w3.org/2006/time#"
+        },
+        {
+            "prefix": "frmt",
+            "uri": "http://www.w3.org/ns/formats/"
+        },
+        {
+            "prefix": "prov",
+            "uri": "http://www.w3.org/ns/prov#"
+        },
+        {
+            "prefix": "vocals-sd",
+            "uri": "http://w3id.org/rsp/vocals-sd#"
+        },
+        {
+            "prefix": "vocals-prov",
+            "uri": "http://w3id.org/rsp/vocals-prov#"
+        },
+        {
+            "prefix": "vocals",
+            "uri": "http://w3id.org/rsp/vocals#"
+        }
+    ],
     "resources": [
         {
             "label": "Stream",
