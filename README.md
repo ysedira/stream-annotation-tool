@@ -9,5 +9,9 @@ using [VoCaLS](http://w3id.org/rsp/vocals/) ontology.
 ![Service Annotation](https://github.com/ysedira/stream-annotation-tool/blob/master/images/sat_3.png "Homepage")
 ![Annotation Result](https://github.com/ysedira/stream-annotation-tool/blob/master/images/sat_4.png "Homepage")
 
-# How to use it:
-TODO
+# How to run it:
+
+pipenv install
+pipenv shell
+cd server
+python sat/app.py

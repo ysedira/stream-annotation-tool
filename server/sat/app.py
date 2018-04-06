@@ -1,31 +1,53 @@
-from flask import Flask, request, jsonify, g, redirect, url_for
+from flask import Flask, request, jsonify, g, send_from_directory, send_file
 from flask_cors import CORS
+from werkzeug.routing import BaseConverter
 
-from sat.config import SCHEMA
-from sat.services import get_resource, get_resources, get_ontology
+import helpers.config as cnf
+import helpers.services as srv
 
 app = Flask(__name__)  # create the application instance :)
+
+
+class RegexConverter(BaseConverter):
+    def __init__(self, url_map, *items):
+        super(RegexConverter, self).__init__(url_map)
+        self.regex = items[0]
+
+
+app.url_map.converters['regex'] = RegexConverter
 
 
 @app.before_first_request
 def get_schema():
     rc = getattr(g, '_schema', None)
     if rc is None:
-        rc = g._schema = SCHEMA
+        rc = g._schema = cnf.SCHEMA
     return rc
+
+
+@app.route("/")
+@app.route("/static/resources/")
+@app.route("/static/resources")
+def index():
+    return send_file("static/index.html")
+
+
+@app.route("/<regex('\w\.(js|css)'):path>")
+def assets(path):
+    return send_from_directory("static", path)
 
 
 @app.route("/api/resources", methods=["GET"])
 def resource():
     _schema = get_schema()
-    response = get_resources(_schema)
+    response = srv.get_resources(_schema)
     return jsonify(response)
 
 
 @app.route("/api/resources/<resource_type>", methods=["GET"])
 def resource_details(resource_type):
     _schema = get_schema()
-    resource = get_resource(_schema, resource_type)
+    resource = srv.get_resource(_schema, resource_type)
     response = {}
     response["type"] = resource["type"]
     response["requiredPredicates"] = [res for res in filter(lambda res: res["required"], resource["predicates"])]
@@ -48,7 +70,7 @@ def _resource():
         "type": request_resource["type"],
         "predicates": predicates
     }
-    response = {"content": get_ontology(_schema, resource, frmt=out_format)}
+    response = {"content": srv.get_ontology(_schema, resource, frmt=out_format)}
 
     return jsonify(response)
 

@@ -60,11 +60,13 @@ export class ResourceDetailsComponent implements OnInit {
 
   generate(event) {
     event.stopPropagation();
-    this.resource.requiredPredicates.forEach(triple => triple.subject = this.resource.subject);
-    this.resource.optionalPredicates.forEach(triple => triple.subject = this.resource.subject);
-    this.resource.requiredPredicates = this.resource.requiredPredicates.filter(pred => pred.object);
-    this.resource.optionalPredicates = this.resource.optionalPredicates.filter(pred => pred.object);
-    this.resourceService.postResource(this.resource).subscribe(rdf => this.generatedRDF = rdf["content"]);
+    const thatResource = Object.assign({}, this.resource);
+
+    thatResource.requiredPredicates.forEach(triple => triple.subject = this.resource.subject);
+    thatResource.optionalPredicates.forEach(triple => triple.subject = this.resource.subject);
+    thatResource.requiredPredicates = thatResource.requiredPredicates.filter(pred => pred.object);
+    thatResource.optionalPredicates = thatResource.optionalPredicates.filter(pred => pred.object);
+    this.resourceService.postResource(thatResource).subscribe(rdf => this.generatedRDF = rdf["content"]);
 
   }
 }
