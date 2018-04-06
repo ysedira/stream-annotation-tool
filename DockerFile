@@ -29,7 +29,10 @@ COPY ./server /app/server
 
 COPY ./client /app/client
 
-RUN nohup python3 /app/server/sat/app/py &
-RUN cd /app/client && nohup ng serve &
+RUN cd /app/client \
+    && ng build --prod --env=prod -bh /static --deploy-url /static
+
+CMD pipenv shell \
+    && python /app/server/sat/app/py
 
 
